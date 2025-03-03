@@ -1,0 +1,105 @@
+.student-details-container {
+  font-family: "Poppins", sans-serif;
+  background-color: #9fe2ff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: rgb(0, 0, 0);
+}
+
+.student-name {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #00aaff; /* Blue accent */
+  margin-bottom: 20px;
+}
+
+/* Grid for student details */
+.student-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  width: 90%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+}
+
+.detail-box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+  display: flex; /* ✅ Ensures proper alignment */
+  flex-direction: column; /* ✅ Text in column format */
+  justify-content: center; /* ✅ Centers text vertically */
+  align-items: center; /* ✅ Centers text horizontally */
+  height: 80px; /* ✅ Gives a uniform box height */
+}
+
+.detail-box strong {
+  display: block;
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #00aaff;
+}
+
+.detail-box span {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* LeetCode Section */
+.leetcode-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-link {
+  color: #00aaff;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.profile-link:hover {
+  color: #66ccff;
+}
+
+.leetcode-img {
+  width: 500px; /* Bigger image */
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Companies Attended */
+.companies-list {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+.companies-list li {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Loading State */
+.loading {
+  font-size: 22px;
+  color: white;
+  text-align: center;
+  margin-top: 50px;
+}

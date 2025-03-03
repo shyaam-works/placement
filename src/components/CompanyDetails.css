@@ -1,0 +1,161 @@
+/* General Page Styling */
+.company-details {
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #333;
+}
+
+/* Page Title */
+.company-title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #222;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  background: white;
+  color: #333;
+}
+
+.search-bar::placeholder {
+  color: #666;
+}
+
+/* Rounds Summary Button */
+.rounds-page-btn {
+  padding: 17px 18px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(90deg, #ff0080, #8000ff);
+  color: white;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.rounds-page-btn a {
+  text-decoration: none;
+  color: white;
+}
+
+.rounds-page-btn:hover {
+  opacity: 0.85;
+}
+
+/* Table Container */
+.company-table-container {
+  width: 100%;
+  max-width: 1200px;
+  overflow-x: auto;
+  border-radius: 12px;
+  background: white;
+  padding: 20px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+}
+
+/* Table */
+.company-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1rem;
+  text-align: center;
+  background: white;
+}
+
+/* Table Header */
+.company-table thead {
+  background: #f0f0f0;
+  font-weight: bold;
+  border-bottom: 2px solid #ccc;
+}
+
+.company-table th,
+.company-table td {
+  padding: 12px;
+  border: 1px solid #ccc;
+}
+
+/* Round Buttons */
+.company-round-btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+  width: 100px;
+}
+
+.company-cleared {
+  background-color: #00c853;
+  color: white;
+}
+
+.company-not-cleared {
+  background-color: #d32f2f;
+  color: white;
+}
+
+.company-round-btn:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* Export Button */
+.export-btn {
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.export-btn:hover {
+  background-color: #45a049;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .company-title {
+    font-size: 2rem;
+  }
+
+  .company-table {
+    font-size: 0.9rem;
+  }
+
+  .company-table th,
+  .company-table td {
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,194 @@
+/* Restrict styles to only .manage-students-wrapper */
+.manage-students-wrapper {
+  font-family: "Poppins", sans-serif;
+  background-image: url(../../public/Screenshot\ 2025-02-21\ 143339.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Main container */
+.manage-students-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+/* Page title */
+.manage-students-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  margin: 15px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  outline: none;
+}
+
+.search-bar::placeholder {
+  color: #666;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+  justify-content: center;
+}
+
+/* Analysis Button */
+.analysis-button {
+  display: inline-block;
+  padding: 8px 16px; /* Reduced from 12px 24px */
+  font-size: 16px; /* Reduced from 18px */
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(90deg, #ff00ff, #00aaff);
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.analysis-button:hover {
+  background: linear-gradient(90deg, #ff44ff, #44aaff);
+  transform: scale(1.05);
+}
+
+/* Export Button */
+.export-button {
+  padding: 8px 16px; /* Matches analysis-button size */
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.export-button:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+/* Table Wrapper */
+.manage-students-table-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+/* Student Table */
+.manage-students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid rgb(0, 0, 0); /* Table border */
+}
+
+/* Table Headers */
+.manage-students-table-header-row {
+  background-color: rgb(0, 123, 255);
+}
+
+.manage-students-table-header {
+  padding: 12px;
+  color: white;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.418);
+}
+
+/* Table Rows */
+.manage-students-table-row:nth-child(even) {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.manage-students-table-row:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Student Name Column */
+.manage-students-name {
+  padding: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #00aaff;
+  text-align: center;
+}
+
+/* Student Link */
+.manage-students-link {
+  font-size: 20px;
+  color: #504e4e;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.manage-students-link:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
+/* Applied & Not Applied Cells */
+.manage-students-rounds-cleared {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
+}
+
+.manage-students-not-applied {
+  color: #ff4444;
+  font-weight: bold;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Add borders to table cells */
+.manage-students-table td {
+  border: 2px solid white;
+  padding: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .manage-students-table {
+    font-size: 14px;
+  }
+
+  .manage-students-table-header,
+  .manage-students-name {
+    font-size: 12px;
+  }
+
+  .analysis-button,
+  .export-button {
+    padding: 6px 12px; /* Further reduced for mobile */
+    font-size: 14px; /* Reduced from 16px */
+  }
+}
