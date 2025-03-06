@@ -121,7 +121,7 @@ const ManageStudents = () => {
             <tbody>
               {filteredStudents.map((student) => (
                 <tr key={student._id} className="manage-students-table-row">
-                  <td className="manage-students-name">
+                  <td className="manage-students-name data-label">
                     <Link
                       to={`/student/${student._id}`}
                       className="manage-students-link"
@@ -141,6 +141,7 @@ const ManageStudents = () => {
 
                     return (
                       <td
+                        data-label={company}
                         key={companyIndex}
                         className={
                           roundsCleared > 0

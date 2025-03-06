@@ -186,9 +186,9 @@ const CompanyDetails = () => {
           <tbody>
             {filteredStudents.map((student, studentIndex) => (
               <tr key={studentIndex}>
-                <td>{student.studentname}</td>
+                <td className="data-label">{student.studentname}</td>
                 {[...Array(roundsCount)].map((_, roundIndex) => (
-                  <td key={roundIndex}>
+                  <td className="data-label" key={roundIndex}>
                     <button
                       className={`company-round-btn ${
                         student.rounds.includes(`Round ${roundIndex + 1}`)
@@ -211,7 +211,7 @@ const CompanyDetails = () => {
                     </button>
                   </td>
                 ))}
-                <td>
+                <td className="data-label">
                   <button
                     className={`company-round-btn ${
                       student.rounds.includes("Selected")

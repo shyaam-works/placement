@@ -5,68 +5,69 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 1rem;
   color: rgb(0, 0, 0);
+  box-sizing: border-box;
 }
 
 .student-name {
   font-size: 2rem;
   font-weight: bold;
-  color: #00aaff; /* Blue accent */
-  margin-bottom: 20px;
+  color: black;
+  margin-bottom: 1.25rem;
+  text-align: center;
 }
 
-/* Grid for student details */
 .student-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
-  width: 90%;
+  gap: 0.9375rem;
+  width: 100%;
   max-width: 1000px;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .detail-box {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(8px);
   border-radius: 10px;
-  padding: 15px;
+  padding: 0.9375rem;
   text-align: center;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-  display: flex; /* ✅ Ensures proper alignment */
-  flex-direction: column; /* ✅ Text in column format */
-  justify-content: center; /* ✅ Centers text vertically */
-  align-items: center; /* ✅ Centers text horizontally */
-  height: 80px; /* ✅ Gives a uniform box height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
 }
 
 .detail-box strong {
   display: block;
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: #00aaff;
+  font-size: 1.25rem;
+  margin-bottom: 0.625rem;
+  color: black;
 }
 
 .detail-box span {
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #ffffff;
 }
 
-/* LeetCode Section */
 .leetcode-profile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .profile-link {
   color: #00aaff;
-  font-size: 18px;
+  font-size: 1.125rem;
   text-decoration: none;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
   display: inline-block;
+  transition: color 0.3s ease;
 }
 
 .profile-link:hover {
@@ -74,32 +75,128 @@
 }
 
 .leetcode-img {
-  width: 500px; /* Bigger image */
+  width: 100%;
+  max-width: 500px;
   height: auto;
   border-radius: 12px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-/* Companies Attended */
 .companies-list {
   list-style-type: none;
   padding: 0;
   text-align: center;
+  width: 100%;
+  max-width: 800px;
 }
 
 .companies-list li {
   background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
+  padding: 0.625rem;
   border-radius: 10px;
-  margin: 5px 0;
-  font-size: 18px;
+  margin: 0.3125rem 0;
+  font-size: 1.125rem;
   font-weight: bold;
 }
 
-/* Loading State */
 .loading {
-  font-size: 22px;
+  font-size: 1.375rem;
   color: white;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 3.125rem;
+}
+
+@media (max-width: 768px) {
+  .student-details-container {
+    padding: 0.75rem;
+  }
+
+  .student-name {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .student-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail-box {
+    padding: 0.75rem;
+    height: auto;
+    min-height: 80px;
+  }
+
+  .detail-box strong {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-box span {
+    font-size: 0.85rem;
+  }
+
+  .profile-link {
+    font-size: 1rem;
+  }
+
+  .leetcode-img {
+    max-width: 400px;
+  }
+
+  .companies-list li {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .loading {
+    font-size: 1.25rem;
+    margin-top: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .student-details-container {
+    padding: 0.5rem;
+  }
+
+  .student-name {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .student-grid {
+    gap: 0.625rem;
+  }
+
+  .detail-box {
+    padding: 0.625rem;
+  }
+
+  .detail-box strong {
+    font-size: 1rem;
+  }
+
+  .detail-box span {
+    font-size: 0.8rem;
+  }
+
+  .profile-link {
+    font-size: 0.9rem;
+  }
+
+  .leetcode-img {
+    max-width: 300px;
+  }
+
+  .companies-list li {
+    font-size: 0.9rem;
+    padding: 0.4rem;
+  }
+
+  .loading {
+    font-size: 1.125rem;
+    margin-top: 2rem;
+  }
 }

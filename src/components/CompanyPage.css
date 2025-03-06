@@ -1,4 +1,3 @@
-/* Wrapper for entire page */
 .company-container {
   font-family: "Poppins", sans-serif;
   background-image: url(../../public/Screenshot\ 2025-02-21\ 143339.png);
@@ -8,30 +7,38 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   color: rgb(0, 0, 0);
-  padding: 20px;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-.search-form-container {
+.company-heading {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #000000;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.type-container {
   display: flex;
   align-items: center;
-  gap: 15px; /* Adjust spacing */
+  gap: 0.9375rem;
+  width: 100%;
+  max-width: 800px;
+  padding: 0.9375rem;
   background: rgba(255, 255, 255, 0.429);
-  padding: 15px;
   border-radius: 10px;
   backdrop-filter: blur(8px);
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-  width: fit-content;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
-/* Ensure both take equal width */
 .searchbar {
   flex: 1;
   max-width: 250px;
-  padding: 10px;
+  padding: 0.625rem;
   border-radius: 8px;
   border: none;
   font-size: 1rem;
@@ -39,93 +46,120 @@
   background: rgba(255, 255, 255, 0.531);
   color: black;
 }
+
 .searchbar:focus {
   border: 2px solid rgba(194, 194, 235, 0.372);
-  box-shadow: 0pc 2px 30px rgb(103, 170, 211);
+  box-shadow: 0px 2px 30px rgb(103, 170, 211);
+  outline: none;
 }
 
 .company-form {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
   background: transparent;
   padding: 0;
   box-shadow: none;
+  flex: 1;
 }
-.type-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  width: 100%;
-  max-width: 60%;
-  padding: 15px;
+
+.company-form input {
+  flex: 1;
+  padding: 0.625rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  outline: none;
+  background: rgba(255, 255, 255, 0.531);
+  color: rgb(0, 0, 0);
 }
 
 .company-form input:focus {
   border: 2px solid rgba(194, 194, 235, 0.372);
-  box-shadow: 0pc 2px 30px rgb(103, 170, 211);
+  box-shadow: 0px 2px 30px rgb(103, 170, 211);
 }
-.searchbar,
-.company-form input {
-  flex: 1;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 1rem;
-  text-align: center;
+
+.company-form input::placeholder {
+  color: rgba(0, 0, 0, 0.504);
+}
+
+.company-button {
+  padding: 0.625rem 0.9375rem;
+  border-radius: 5px;
+  border: none;
   outline: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  background-color: rgb(0, 0, 0);
+  color: white;
 }
-/* Container for the company cards */
+
+.company-button:hover {
+  transform: scale(1.05);
+}
+
 .company-card-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 15px;
+  gap: 0.9375rem;
   justify-content: center;
-  padding: 20px;
+  padding: 1.25rem;
+  width: 100%;
 }
 
-/* Individual company card */
 .company-card {
   background: #ffffff88;
-  padding: 15px;
+  padding: 0.9375rem;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   width: 250px;
-  height: 80px;
+  min-height: 150px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 0.625rem;
+  transition: all 0.3s ease;
 }
+
 .company-card:hover {
   box-shadow: 0px 1px 10px white;
   border: 2px solid rgba(164, 160, 160, 0.153);
 }
 
-/* Company name link */
 .company-name {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: bolder;
   text-decoration: none;
   color: #000000;
 }
 
-/* Buttons container */
-.card-buttons {
-  display: flex;
-  gap: 10px;
+.company-name a {
+  text-decoration: none;
+  color: rgb(87, 85, 85);
 }
 
-/* Edit and delete buttons */
+.company-name a:hover {
+  color: rgb(0, 0, 0);
+}
+
+.card-buttons {
+  display: flex;
+  gap: 0.625rem;
+}
+
 .edit-btn,
 .delete-btn {
-  padding: 8px 12px;
+  padding: 0.5rem 0.75rem;
   border: none;
-  margin-top: 8px;
+  margin-top: 0.5rem;
   cursor: pointer;
   font-size: 0.9rem;
   border-radius: 5px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 
 .edit-btn {
@@ -148,168 +182,102 @@
   color: white;
 }
 
-/* Input Field */
-.company-form input {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  width: 250px;
-  background: rgba(255, 255, 255, 0.531);
-  color: rgb(0, 0, 0); /* White text */
-  text-align: center;
-}
-
-.company-form input::placeholder {
-  color: rgba(0, 0, 0, 0.504); /* Light gray placeholder */
-}
-
-.company-button {
-  padding: 10px 15px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  transition: 0.3s;
-  background-color: rgb(0, 0, 0);
-  color: white;
-}
-
-.company-button:hover {
-  transform: scale(1.05);
-}
-
-/* Company List */
-.company-list {
-  list-style-type: none;
-  padding: 8px;
-
-  margin: 0;
-  width: 100%;
-  max-width: 90%;
-}
-
-/* Individual List Item */
-.company-list li {
-  background: rgba(255, 255, 255, 0.662);
-  color: black;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  backdrop-filter: blur(5px);
-  box-shadow: 0px 19px 50px rgba(0, 0, 0, 0.2);
-}
-
-/* Ensures Buttons Stay Aligned */
-.company-list li .company-name {
-  flex-grow: 1;
-  text-align: left;
-  font-size: 1.2rem;
-  font-weight: bold;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: black;
-}
-
-/* Action Buttons */
-.action-buttons {
-  display: flex;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-/* Edit & Delete Buttons */
-.company-list button {
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s;
-  font-size: 0.9rem;
-  font-weight: bold;
-}
-
-/* Edit Button */
-.company-list .edit-btn {
-  background-color: #04bd0d;
-  color: black;
-  width: 100px;
-}
-
-.company-list .edit-btn:hover {
-  background-color: #19e54c;
-}
-
-/* Delete Button */
-.company-list .delete-btn {
-  background-color: #c20303;
-  color: white;
-}
-
-.company-list .delete-btn:hover {
-  background-color: #cc3333;
-}
-.company-name a {
-  text-decoration: none;
-  color: rgb(87, 85, 85);
-  padding-left: 10px;
-}
-
-/* Empty State Message */
 .empty-message {
   text-align: center;
   font-size: 1.2rem;
   color: black;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 1.25rem;
 }
 
-/* Responsive Design */
+.error-message {
+  color: #d9534f;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
-  .company-form {
-    flex-direction: column;
+  .company-container {
+    justify-content: flex-start;
+    padding-top: 1.5rem;
   }
 
-  .company-form input,
-  .search-bar {
+  .type-container {
+    flex-direction: column;
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+
+  .searchbar {
+    width: 100%;
+    max-width: none;
+    order: 1;
+  }
+
+  .company-form {
+    width: 100%;
+    flex-direction: column;
+    order: 2;
+  }
+
+  .company-form input {
     width: 100%;
   }
 
-  .company-list li {
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  .company-button {
+    width: 100%;
+    order: 3;
+  }
+
+  .company-card-container {
+    padding: 0.75rem;
+  }
+
+  .company-card {
+    width: 100%;
+    max-width: 300px;
   }
 }
 
-.company-name a:hover {
-  text-decoration: none; /* Prevent underline on hover too */
-  color: rgb(0, 0, 0); /* Optional: Change color on hover for better UX */
-}
-.company-card {
-  background: #ffffff88;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 250px;
-  min-height: 150px; /* Increased height */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Ensures buttons stay inside */
-  align-items: center;
-  gap: 10px;
-}
+@media (max-width: 480px) {
+  .company-container {
+    padding: 0.5rem;
+    padding-top: 1rem;
+  }
 
-.card-buttons {
-  display: flex;
-  gap: 10px;
-  /* Push buttons to bottom */
+  .type-container {
+    padding: 0.5rem;
+  }
+
+  .searchbar,
+  .company-form input {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .company-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .company-card {
+    padding: 0.75rem;
+    min-height: 120px;
+  }
+
+  .company-name {
+    font-size: 1rem;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .company-heading {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
 }

@@ -123,7 +123,7 @@ const CompanyPage = () => {
 
   return (
     <div className="company-container">
-      <h1>Company Management</h1>
+      <h1 className="company-heading">Company Management</h1>
       {error && <p className="error-message">{error}</p>}
       <div className="type-container">
         <input

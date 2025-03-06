@@ -3,8 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f4f4f4;
+  padding: 1rem;
 }
 
 .login-form {
@@ -12,41 +13,56 @@
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: all 0.3s ease;
 }
 
 .login-header {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.75rem;
+  font-weight: 600;
   color: #333;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 label {
   align-self: flex-start;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
   color: #555;
+  font-size: 0.95rem;
 }
 
 .login-input {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
+  padding: 0.75rem; /* Increased padding for touch targets on mobile */
+  margin-bottom: 1.25rem; /* More spacing between inputs */
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 1rem; /* Consistent text size */
+  transition: border-color 0.3s ease; /* Smooth focus effect */
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #007bff; /* Visual feedback on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3); /* Subtle glow */
 }
 
 .login-button {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.75rem; /* Larger tap area for mobile */
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease; /* Smooth hover effect */
 }
 
 .login-button:hover {
@@ -54,7 +70,45 @@ label {
 }
 
 .login-error {
-  color: red;
+  color: #d9534f; /* Softer red for better contrast */
   font-size: 0.9rem;
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 480px) {
+  .login-form {
+    padding: 1.5rem; /* Reduced padding on small screens */
+    max-width: 100%; /* Full width on mobile */
+    margin: 0 1rem; /* Side margins for spacing */
+  }
+
+  .login-header {
+    font-size: 1.5rem; /* Slightly smaller on mobile */
+    margin-bottom: 1.25rem;
+  }
+
+  .login-input {
+    padding: 0.65rem; /* Slightly smaller but still tappable */
+    margin-bottom: 1rem;
+  }
+
+  .login-button {
+    padding: 0.65rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-form {
+    padding: 1rem; /* Further reduced for very small screens */
+  }
+
+  .login-header {
+    font-size: 1.25rem; /* Even smaller for tiny screens */
+  }
+
+  label {
+    font-size: 0.85rem;
+  }
 }
