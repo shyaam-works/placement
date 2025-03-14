@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Added useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../config";
-import "./StudentDetails.css";
 
 const StudentDetails = () => {
   const { id } = useParams();
   const [student, setStudent] = useState(null);
-  const navigate = useNavigate(); // Added for navigation
+  const navigate = useNavigate();
 
   useEffect(() => {
     const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true"; // Use sessionStorage
+      sessionStorage.getItem("isAuthenticated") === "true";
     if (!isAuthenticated) {
-      navigate("/"); // Redirect to login if not authenticated
+      navigate("/");
       return;
     }
     fetchStudentDetails();
@@ -28,68 +27,132 @@ const StudentDetails = () => {
     }
   };
 
-  if (!student) return <div className="loading">Loading...</div>;
+  if (!student)
+    return (
+      <div className="text-xl sm:text-lg text-white text-center mt-12">
+        Loading...
+      </div>
+    );
 
   const leetcodeImageUrl = `https://leetcode-stats.vercel.app/api?username=${student.Username}&theme=dark`;
 
   return (
-    <div className="student-details-container">
-      <h1 className="student-name">{student.username}</h1>
+    <div className="font-poppins bg-cyan-200 min-h-screen flex flex-col items-center p-4 sm:p-3 xs:p-2 text-black box-border">
+      <h1 className="text-4xl sm:text-3xl xs:text-2xl font-bold text-black mb-5 sm:mb-4 xs:mb-3 text-center">
+        {student.username}
+      </h1>
 
-      <div className="student-grid">
-        <div className="detail-box">
-          <strong>Graduation Degree:</strong> {student["Graduation Degree"]}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-3 w-full max-w-5xl mb-5 sm:mb-4">
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Graduation Degree:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["Graduation Degree"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>Mobile Number:</strong> {student["Mobile Number"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Mobile Number:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["Mobile Number"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>Email ID:</strong> {student["Email ID"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Email ID:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["Email ID"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>X %:</strong> {student["X % "]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            X %:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["X % "]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>XII %:</strong> {student["XII % "]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            XII %:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["XII % "]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>UG Specialization:</strong> {student["UG SPECIALIZATION"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            UG Specialization:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["UG SPECIALIZATION"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>Aggregate UG:</strong> {student["Aggregate UG"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Aggregate UG:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["Aggregate UG"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>Easy Questions:</strong> {student["EASY"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Easy Questions:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["EASY"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>Medium Questions:</strong> {student["MEDUIM"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Medium Questions:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["MEDUIM"]}
+          </span>
         </div>
-        <div className="detail-box">
-          <strong>Hard Questions:</strong> {student["HARD"]}
+        <div className="bg-white/10 backdrop-blur-md rounded-lg p-3.5 sm:p-3 xs:p-2.5 text-center shadow-lg flex flex-col justify-center items-center h-20 sm:h-auto min-h-[80px]">
+          <strong className="block text-xl sm:text-lg xs:text-base mb-2.5 sm:mb-2 text-black">
+            Hard Questions:
+          </strong>
+          <span className="text-sm sm:text-[0.85rem] xs:text-[0.8rem] text-white">
+            {student["HARD"]}
+          </span>
         </div>
       </div>
 
-      <div className="leetcode-profile">
-        <h2>LeetCode Profile</h2>
+      <div className="flex flex-col items-center mb-5 sm:mb-4">
+        <h2 className="text-2xl sm:text-xl font-bold mb-2.5 sm:mb-2">
+          LeetCode Profile
+        </h2>
         <a
           href={student["LEETCODE LINK"]}
           target="_blank"
           rel="noopener noreferrer"
-          className="profile-link"
+          className="text-blue-400 text-lg sm:text-base font-bold mb-2.5 sm:mb-2 hover:text-blue-200 transition-colors duration-300 no-underline"
         >
           View Profile
         </a>
         <img
           src={leetcodeImageUrl}
           alt="LeetCode Stats"
-          className="leetcode-img"
+          className="w-full max-w-[500px] sm:max-w-[400px] xs:max-w-[300px] h-auto rounded-xl shadow-lg"
         />
       </div>
 
-      <h2>Companies Attended</h2>
-      <ul className="companies-list">
+      <h2 className="text-2xl sm:text-xl font-bold mb-2.5 sm:mb-2">
+        Companies Attended
+      </h2>
+      <ul className="list-none p-0 text-center w-full max-w-4xl">
         {student.companies.map((company, index) => (
-          <li key={index}>
+          <li
+            key={index}
+            className="bg-white/10 p-2.5 sm:p-2 xs:p-1.5 m-1 sm:m-0.5 rounded-lg text-lg sm:text-base xs:text-sm font-bold"
+          >
             {company.companyname} - {company.rounds.length}{" "}
             {company.rounds.length === 1 ? "round" : "rounds"}
           </li>

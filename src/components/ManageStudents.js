@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import * as XLSX from "xlsx";
 import API_URL from "../config";
-import "./ManageStudents.css";
 
 const ManageStudents = () => {
   const [students, setStudents] = useState([]);
@@ -14,9 +13,9 @@ const ManageStudents = () => {
 
   useEffect(() => {
     const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true"; // Use sessionStorage
+      sessionStorage.getItem("isAuthenticated") === "true";
     if (!isAuthenticated) {
-      navigate("/"); // Redirect to login if not authenticated
+      navigate("/");
       return;
     }
     fetchStudents();
@@ -85,46 +84,70 @@ const ManageStudents = () => {
   };
 
   return (
-    <div className="manage-students-wrapper">
-      <div className="manage-students-container">
-        <h1 className="manage-students-title">Manage Students</h1>
+    <div
+      className="font-poppins bg-cover bg-no-repeat bg-center min-h-screen flex flex-col justify-center items-center"
+      style={{ backgroundImage: "url('/Screenshot 2025-02-21 143339.png')" }}
+    >
+      <div className="w-full max-w-6xl my-10 sm:my-6 xs:my-4 p-5 sm:p-3 xs:p-2 text-center text-black box-border">
+        <h1 className="text-4xl sm:text-3xl xs:text-2xl font-bold mb-5 sm:mb-4 xs:mb-3 text-black">
+          Manage Students
+        </h1>
 
         <input
           type="text"
           placeholder="Search students..."
           value={searchQuery}
           onChange={handleSearch}
-          className="search-bar"
+          className="w-full max-w-md p-2.5 sm:p-2 m-3 sm:m-2 rounded-lg border border-gray-300 bg-white/90 text-gray-800 placeholder-gray-600 outline-none"
         />
 
-        <div className="button-container">
-          <Link to="/students/analysis" className="analysis-button">
+        <div className="flex gap-2.5 my-5 sm:my-4 flex-wrap justify-center">
+          <Link
+            to="/students/analysis"
+            className="px-4 sm:px-3 py-2 sm:py-1.5 text-base sm:text-sm font-bold text-black bg-gradient-to-r from-pink-500 to-blue-400 rounded-lg hover:from-pink-400 hover:to-blue-300 hover:scale-105 transition-all duration-300 no-underline"
+          >
             View Analysis
           </Link>
-          <button className="export-button" onClick={exportToExcel}>
+          <button
+            className="px-4 sm:px-3 py-2 sm:py-1.5 text-base sm:text-sm font-bold text-black bg-green-500 rounded-lg hover:bg-green-600 hover:scale-105 transition-all duration-300"
+            onClick={exportToExcel}
+          >
             Export to Excel
           </button>
         </div>
 
-        <div className="manage-students-table-wrapper">
-          <table className="manage-students-table">
-            <thead>
-              <tr className="manage-students-table-header-row">
-                <th className="manage-students-table-header">Student Name</th>
+        <div className="overflow-x-auto rounded-lg">
+          <table className="w-full border-collapse bg-white/10 rounded-lg border-2 border-black">
+            <thead className="hidden sm:table-header-group">
+              <tr className="bg-blue-600">
+                <th className="p-3 sm:p-2 text-black uppercase font-bold text-xl sm:text-base border-2 border-white/40">
+                  Student Name
+                </th>
                 {companyNames.map((company, index) => (
-                  <th key={index} className="manage-students-table-header">
+                  <th
+                    key={index}
+                    className="p-3 sm:p-2 text-black uppercase font-bold text-xl sm:text-base border-2 border-white/40"
+                  >
                     {company}
                   </th>
                 ))}
               </tr>
             </thead>
             <tbody>
-              {filteredStudents.map((student) => (
-                <tr key={student._id} className="manage-students-table-row">
-                  <td className="manage-students-name data-label">
+              {filteredStudents.map((student, index) => (
+                <tr
+                  key={student._id}
+                  className={`${
+                    index % 2 === 0 ? "bg-white/10" : "bg-white/5"
+                  } flex flex-col sm:table-row mb-4 sm:mb-0 border-b sm:border-b-0 border-gray-300`}
+                >
+                  <td
+                    className="p-3 sm:p-2 text-blue-400 font-bold text-center border-2 border-black flex justify-between items-center sm:table-cell before:content-[attr(data-label)] before:font-bold before:mr-2 before:text-black sm:before:content-none"
+                    data-label="Student Name"
+                  >
                     <Link
                       to={`/student/${student._id}`}
-                      className="manage-students-link"
+                      className="text-xl sm:text-base text-gray-600 hover:text-black hover:underline transition-colors duration-300 no-underline"
                     >
                       {student.username}
                     </Link>
@@ -143,11 +166,9 @@ const ManageStudents = () => {
                       <td
                         data-label={company}
                         key={companyIndex}
-                        className={
-                          roundsCleared > 0
-                            ? "manage-students-rounds-cleared"
-                            : "manage-students-not-applied"
-                        }
+                        className={`p-3 sm:p-2 font-bold text-center border-2 border-black flex justify-between items-center sm:table-cell before:content-[attr(data-label)] before:font-bold before:mr-2 before:text-black sm:before:content-none ${
+                          roundsCleared > 0 ? "text-black" : "text-red-500"
+                        }`}
                       >
                         {roundsCleared > 0
                           ? `${roundsCleared} Rounds${

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_URL from "../config";
-import "./CompanyPage.css";
 
 const CompanyPage = () => {
   const [companies, setCompanies] = useState([]);
@@ -17,9 +16,9 @@ const CompanyPage = () => {
 
   useEffect(() => {
     const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true"; // Use sessionStorage
+      sessionStorage.getItem("isAuthenticated") === "true";
     if (!isAuthenticated) {
-      navigate("/"); // Redirect to login if not authenticated
+      navigate("/");
       return;
     }
     fetchCompanies();
@@ -122,19 +121,26 @@ const CompanyPage = () => {
   };
 
   return (
-    <div className="company-container">
-      <h1 className="company-heading">Company Management</h1>
-      {error && <p className="error-message">{error}</p>}
-      <div className="type-container">
+    <div
+      className="font-poppins bg-cover bg-no-repeat bg-center min-h-screen flex flex-col items-center text-black p-4 sm:p-2 pt-6 sm:pt-4 box-border"
+      style={{ backgroundImage: "url('/Screenshot 2025-02-21 143339.png')" }}
+    >
+      <h1 className="text-4xl sm:text-3xl font-semibold text-black mb-6 sm:mb-4 text-center">
+        Company Management
+      </h1>
+      {error && (
+        <p className="text-red-500 text-sm mb-4 text-center">{error}</p>
+      )}
+      <div className="flex items-center md:items-center gap-3.5 w-full max-w-4xl p-3.5 bg-white/40 rounded-lg backdrop-blur-md shadow-lg mb-5 flex-col md:flex-row">
         <input
           type="text"
-          className="searchbar"
+          className="flex-1 max-w-[250px] md:max-w-none p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none"
           placeholder="Search companies..."
           value={searchTerm}
           onChange={handleSearch}
         />
 
-        <div className="company-form">
+        <div className="flex gap-2.5 flex-col md:flex-row w-full">
           <input
             type="text"
             placeholder="Enter company name"
@@ -143,6 +149,7 @@ const CompanyPage = () => {
               setCompanyName(e.target.value.toUpperCase());
               setShowRoundsInput(e.target.value.trim() !== "");
             }}
+            className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
           />
 
           {showRoundsInput && (
@@ -152,36 +159,45 @@ const CompanyPage = () => {
               placeholder="Enter total rounds"
               value={totalRounds}
               onChange={(e) => setTotalRounds(e.target.value)}
+              className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
             />
           )}
         </div>
 
-        {editingCompany ? (
-          <button className="company-button" onClick={updateCompany}>
-            Update
-          </button>
-        ) : (
-          <button className="company-button" onClick={addCompany}>
-            Add
-          </button>
-        )}
+        <button
+          className="p-2.5 px-3.5 sm:p-2 sm:px-3 rounded-md bg-black text-white font-bold text-base sm:text-sm hover:scale-105 transition-all duration-300 w-full md:w-auto"
+          onClick={editingCompany ? updateCompany : addCompany}
+        >
+          {editingCompany ? "Update" : "Add"}
+        </button>
       </div>
       {filteredCompanies.length === 0 ? (
-        <p className="empty-message">No companies found. Add one now!</p>
+        <p className="text-center text-xl sm:text-lg text-black font-bold mt-5">
+          No companies found. Add one now!
+        </p>
       ) : (
-        <div className="company-card-container">
+        <div className="flex flex-wrap gap-3.5 justify-center p-5 sm:p-3 w-full">
           {filteredCompanies.map((company) => (
-            <div className="company-card" key={company._id}>
-              <Link to={`/company/${company._id}`} className="company-name">
+            <div
+              key={company._id}
+              className="bg-white/50 p-3.5 sm:p-3 rounded-lg shadow-md text-center w-[250px] sm:w-full sm:max-w-[300px] min-h-[150px] sm:min-h-[120px] flex flex-col justify-between items-center gap-2.5 transition-all duration-300 hover:shadow-lg hover:border-2 hover:border-gray-200"
+            >
+              <Link
+                to={`/company/${company._id}`}
+                className="text-xl sm:text-lg font-bold text-black no-underline hover:text-gray-800"
+              >
                 {company.companyname}
               </Link>
-              <p>Total Rounds: {company.totalRounds}</p>
-              <div className="card-buttons">
-                <button className="edit-btn" onClick={() => startEdit(company)}>
+              <p className="text-base">Total Rounds: {company.totalRounds}</p>
+              <div className="flex gap-2.5">
+                <button
+                  className="p-2 sm:p-1.5 mt-2 bg-blue-200 text-black text-sm sm:text-xs rounded-md hover:bg-blue-600 hover:text-white transition-all duration-300"
+                  onClick={() => startEdit(company)}
+                >
                   Edit
                 </button>
                 <button
-                  className="delete-btn"
+                  className="p-2 sm:p-1.5 mt-2 bg-gray-300/60 text-black text-sm sm:text-xs rounded-md hover:bg-red-600 hover:text-white transition-all duration-300"
                   onClick={() => deleteCompany(company._id)}
                 >
                   Delete

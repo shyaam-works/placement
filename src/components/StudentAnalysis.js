@@ -17,7 +17,6 @@ import {
 } from "recharts";
 import { Link, useNavigate } from "react-router-dom";
 import API_URL from "../config";
-import "./StudentAnalysis.css";
 
 const StudentAnalysis = () => {
   const [companyStats, setCompanyStats] = useState([]);
@@ -143,12 +142,16 @@ const StudentAnalysis = () => {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF5733"];
 
   return (
-    <div className="student-analysis-page">
-      <h1 className="student-analysis-title">Placement Officer Dashboard</h1>
+    <div className="font-poppins bg-gradient-to-br from-cyan-100 to-cyan-200 min-h-screen p-7 sm:p-5 xs:p-3 flex flex-col items-center text-gray-800 box-border">
+      <h1 className="text-5xl sm:text-4xl xs:text-3xl font-bold mb-7 sm:mb-5 text-black text-center">
+        Placement Officer Dashboard
+      </h1>
 
-      <div className="charts-grid">
-        <div className="chart-container">
-          <h2>Students Selected by Company</h2>
+      <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-4 mb-7 sm:mb-5">
+        <div className="bg-white/95 p-5 sm:p-3 rounded-xl shadow-md">
+          <h2 className="text-xl sm:text-lg text-black text-center mb-3 sm:mb-2">
+            Students Selected by Company
+          </h2>
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={companyStats}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -170,8 +173,10 @@ const StudentAnalysis = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-container">
-          <h2>Round Participation Drop-Off</h2>
+        <div className="bg-white/95 p-5 sm:p-3 rounded-xl shadow-md">
+          <h2 className="text-xl sm:text-lg text-black text-center mb-3 sm:mb-2">
+            Round Participation Drop-Off
+          </h2>
           <ResponsiveContainer width="100%" height={400}>
             <LineChart data={roundStats}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -189,8 +194,10 @@ const StudentAnalysis = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-container">
-          <h2>Offer Distribution</h2>
+        <div className="bg-white/95 p-5 sm:p-3 rounded-xl shadow-md">
+          <h2 className="text-xl sm:text-lg text-black text-center mb-3 sm:mb-2">
+            Offer Distribution
+          </h2>
           <ResponsiveContainer width="100%" height={400}>
             <PieChart>
               <Pie
@@ -226,8 +233,10 @@ const StudentAnalysis = () => {
           </ResponsiveContainer>
         </div>
 
-        <div className="chart-container">
-          <h2>Company Rejection Rates</h2>
+        <div className="bg-white/95 p-5 sm:p-3 rounded-xl shadow-md">
+          <h2 className="text-xl sm:text-lg text-black text-center mb-3 sm:mb-2">
+            Company Rejection Rates
+          </h2>
           <ResponsiveContainer width="100%" height={400}>
             <BarChart data={rejectionStats}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -245,15 +254,25 @@ const StudentAnalysis = () => {
         </div>
       </div>
 
-      <div className="table-container">
-        <h2>Company Performance Overview</h2>
-        <table className="analysis-table">
-          <thead>
-            <tr>
-              <th>Company</th>
-              <th>Total Participants</th>
-              <th>Selected</th>
-              <th>Rejection Rate</th>
+      <div className="w-full max-w-6xl p-5 sm:p-3 xs:p-2 mb-7 sm:mb-5 bg-white/95 rounded-xl shadow-md">
+        <h2 className="text-2xl sm:text-xl text-blue-800 text-center mb-3 sm:mb-2">
+          Company Performance Overview
+        </h2>
+        <table className="w-full border-collapse text-base sm:text-sm">
+          <thead className="hidden sm:table-header-group">
+            <tr className="bg-blue-600">
+              <th className="p-3 border border-gray-300 text-white uppercase font-semibold">
+                Company
+              </th>
+              <th className="p-3 border border-gray-300 text-white uppercase font-semibold">
+                Total Participants
+              </th>
+              <th className="p-3 border border-gray-300 text-white uppercase font-semibold">
+                Selected
+              </th>
+              <th className="p-3 border border-gray-300 text-white uppercase font-semibold">
+                Rejection Rate
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -270,11 +289,34 @@ const StudentAnalysis = () => {
                     ).toFixed(1)
                   : "0.0";
               return (
-                <tr key={index}>
-                  <td>{company.company}</td>
-                  <td>{company.totalStudents}</td>
-                  <td>{company.selectedCount}</td>
-                  <td>{rejectionRate}%</td>
+                <tr
+                  key={index}
+                  className="flex flex-col sm:table-row mb-3 sm:mb-0 border-b sm:border-b-0 border-gray-300"
+                >
+                  <td
+                    data-label="Company"
+                    className="p-3 sm:p-2 border border-gray-300 bg-white text-gray-800 flex justify-between items-center sm:table-cell before:content-[attr(data-label)] before:font-bold before:mr-2 before:text-blue-800 sm:before:content-none"
+                  >
+                    {company.company}
+                  </td>
+                  <td
+                    data-label="Total Participants"
+                    className="p-3 sm:p-2 border border-gray-300 bg-white text-gray-800 flex justify-between items-center sm:table-cell before:content-[attr(data-label)] before:font-bold before:mr-2 before:text-blue-800 sm:before:content-none"
+                  >
+                    {company.totalStudents}
+                  </td>
+                  <td
+                    data-label="Selected"
+                    className="p-3 sm:p-2 border border-gray-300 bg-white text-gray-800 flex justify-between items-center sm:table-cell before:content-[attr(data-label)] before:font-bold before:mr-2 before:text-blue-800 sm:before:content-none"
+                  >
+                    {company.selectedCount}
+                  </td>
+                  <td
+                    data-label="Rejection Rate"
+                    className="p-3 sm:p-2 border border-gray-300 bg-white text-gray-800 flex justify-between items-center sm:table-cell before:content-[attr(data-label)] before:font-bold before:mr-2 before:text-blue-800 sm:before:content-none"
+                  >
+                    {rejectionRate}%
+                  </td>
                 </tr>
               );
             })}
@@ -282,46 +324,79 @@ const StudentAnalysis = () => {
         </table>
       </div>
 
-      <div className="summary">
-        <h2>Placement Overview</h2>
-        <div className="summary-content">
-          <h3>Placement Data</h3>
-          <p>
-            <strong>Placement Interested:</strong> {totalStudents}
+      <div className="w-full max-w-6xl p-6 sm:p-4 xs:p-3 mb-7 sm:mb-5 bg-white/98 rounded-xl shadow-md text-center">
+        <h2 className="text-3xl sm:text-2xl text-blue-700 mb-5 sm:mb-3">
+          Placement Overview
+        </h2>
+        <div>
+          <h3 className="text-xl sm:text-lg text-blue-800 mb-3 sm:mb-2">
+            Placement Data
+          </h3>
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Placement Interested:
+            </strong>{" "}
+            {totalStudents}
           </p>
-          <p>
-            <strong>No of Students Placed So Far:</strong> {studentsPlaced}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              No of Students Placed So Far:
+            </strong>{" "}
+            {studentsPlaced}
           </p>
-          <p>
-            <strong>Number of Offers:</strong> {totalOffers}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Number of Offers:
+            </strong>{" "}
+            {totalOffers}
           </p>
-          <p>
-            <strong>Single Offers:</strong> {offerDistribution.single}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Single Offers:
+            </strong>{" "}
+            {offerDistribution.single}
           </p>
-          <p>
-            <strong>Double Offers:</strong> {offerDistribution.double}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Double Offers:
+            </strong>{" "}
+            {offerDistribution.double}
           </p>
-          <p>
-            <strong>Triple Offers:</strong> {offerDistribution.triple}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Triple Offers:
+            </strong>{" "}
+            {offerDistribution.triple}
           </p>
-          <p>
-            <strong>Quad Offers:</strong> {offerDistribution.quad}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Quad Offers:
+            </strong>{" "}
+            {offerDistribution.quad}
           </p>
-          <p>
-            <strong>Placement Percentage:</strong>{" "}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Placement Percentage:
+            </strong>{" "}
             {totalStudents > 0
               ? ((studentsPlaced / totalStudents) * 100).toFixed(2)
               : "0.00"}
             %
           </p>
-          <p>
-            <strong>Yet to be Placed:</strong> {totalStudents - studentsPlaced}
+          <p className="text-lg sm:text-base xs:text-sm mb-2 sm:mb-1.5">
+            <strong className="text-blue-800 font-semibold">
+              Yet to be Placed:
+            </strong>{" "}
+            {totalStudents - studentsPlaced}
           </p>
         </div>
       </div>
 
-      <div className="back-button-container">
-        <Link to="/students" className="back-button">
+      <div className="mt-7 sm:mt-5 text-center">
+        <Link
+          to="/students"
+          className="inline-block px-7 sm:px-5 xs:px-4 py-3 sm:py-2.5 xs:py-2 text-lg sm:text-base xs:text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-cyan-400 rounded-lg hover:from-blue-700 hover:to-cyan-300 hover:scale-105 transition-all duration-300 no-underline"
+        >
           Back to Students
         </Link>
       </div>
