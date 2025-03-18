@@ -11,6 +11,7 @@ const CompanyDetails = () => {
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [roundsCount, setRoundsCount] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(false); // Loading state from Solution 1
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -59,64 +60,79 @@ const CompanyDetails = () => {
   }, [searchTerm, students]);
 
   const handleRoundClick = async (studentname, roundIndex, currentStatus) => {
-    try {
-      const roundName = `Round ${roundIndex + 1}`;
-      let updatedRounds = new Set(
-        students.find((student) => student.studentname === studentname).rounds
-      );
+    if (isUpdating) return; // Prevent multiple clicks
 
-      if (currentStatus === "Not Cleared") {
-        updatedRounds.add(roundName);
-      } else {
-        updatedRounds.delete(roundName);
+    // Optimistic update
+    const roundName = `Round ${roundIndex + 1}`;
+    const updatedStudents = students.map((student) => {
+      if (student.studentname === studentname) {
+        let updatedRounds = new Set(student.rounds);
+        if (currentStatus === "Not Cleared") {
+          updatedRounds.add(roundName);
+        } else {
+          updatedRounds.delete(roundName);
+        }
+        return { ...student, rounds: Array.from(updatedRounds) };
       }
+      return student;
+    });
+    setStudents(updatedStudents);
+    setIsUpdating(true);
 
+    // Original API call (unchanged)
+    try {
       await axios.patch(`${API_URL}/${id}`, {
         students: {
           studentname,
-          rounds: Array.from(updatedRounds),
+          rounds: Array.from(
+            updatedStudents.find((s) => s.studentname === studentname).rounds
+          ),
         },
       });
-
-      const updatedStudents = students.map((student) => {
-        if (student.studentname === studentname) {
-          return { ...student, rounds: Array.from(updatedRounds) };
-        }
-        return student;
-      });
-
-      setStudents(updatedStudents);
     } catch (error) {
       console.error("Error updating round:", error);
+      // Roll back to previous state on error
+      setStudents(students);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
   const handleSelectionClick = async (studentname, currentRounds) => {
-    try {
-      let updatedRounds = new Set(currentRounds);
+    if (isUpdating) return; // Prevent multiple clicks
 
-      if (updatedRounds.has("Selected")) {
-        updatedRounds.delete("Selected");
-      } else {
-        updatedRounds.add("Selected");
+    // Optimistic update
+    const updatedStudents = students.map((student) => {
+      if (student.studentname === studentname) {
+        let updatedRounds = new Set(currentRounds);
+        if (updatedRounds.has("Selected")) {
+          updatedRounds.delete("Selected");
+        } else {
+          updatedRounds.add("Selected");
+        }
+        return { ...student, rounds: Array.from(updatedRounds) };
       }
+      return student;
+    });
+    setStudents(updatedStudents);
+    setIsUpdating(true);
 
+    // Original API call (unchanged)
+    try {
       await axios.patch(`${API_URL}/${id}`, {
         students: {
           studentname,
-          rounds: Array.from(updatedRounds),
+          rounds: Array.from(
+            updatedStudents.find((s) => s.studentname === studentname).rounds
+          ),
         },
       });
-
-      const updatedStudents = students.map((student) =>
-        student.studentname === studentname
-          ? { ...student, rounds: Array.from(updatedRounds) }
-          : student
-      );
-
-      setStudents(updatedStudents);
     } catch (error) {
       console.error("Error updating selection status:", error);
+      // Roll back to previous state on error
+      setStudents(students);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -165,6 +181,7 @@ const CompanyDetails = () => {
         <button
           className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg shadow-md hover:bg-green-700 hover:shadow-lg transition-all duration-300"
           onClick={exportToExcel}
+          disabled={isUpdating} // Disable export during updates
         >
           Export to Excel
         </button>
@@ -175,6 +192,7 @@ const CompanyDetails = () => {
         placeholder="Search students..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        disabled={isUpdating} // Disable search during updates
       />
       <div className="w-full max-w-7xl mt-6 sm:mt-4 bg-white p-6 sm:p-4 xs:p-3 rounded-xl shadow-lg border border-gray-200 overflow-x-auto">
         <table className="w-full border-collapse text-sm sm:text-xs text-center">
@@ -214,7 +232,7 @@ const CompanyDetails = () => {
                         student.rounds.includes(`Round ${roundIndex + 1}`)
                           ? "bg-teal-500 hover:bg-teal-600"
                           : "bg-red-500 hover:bg-red-600"
-                      }`}
+                      } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                       onClick={() =>
                         handleRoundClick(
                           student.studentname,
@@ -224,6 +242,7 @@ const CompanyDetails = () => {
                             : "Not Cleared"
                         )
                       }
+                      disabled={isUpdating} // Disable during updates
                     >
                       {student.rounds.includes(`Round ${roundIndex + 1}`)
                         ? `R${roundIndex + 1}`
@@ -240,10 +259,11 @@ const CompanyDetails = () => {
                       student.rounds.includes("Selected")
                         ? "bg-green-500 hover:bg-green-600"
                         : "bg-gray-500 hover:bg-gray-600"
-                    }`}
+                    } ${isUpdating ? "opacity-50 cursor-not-allowed" : ""}`}
                     onClick={() =>
                       handleSelectionClick(student.studentname, student.rounds)
                     }
+                    disabled={isUpdating} // Disable during updates
                   >
                     {student.rounds.includes("Selected") ? "✓" : "✗"}
                   </button>
