@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance
+import axiosInstance from "../lib/axiosInstance";
 import * as XLSX from "xlsx";
 
 const CompanyDetails = () => {
@@ -10,7 +10,7 @@ const CompanyDetails = () => {
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [roundsCount, setRoundsCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const CompanyDetails = () => {
   }, [navigate]);
 
   const fetchCompanyDetails = async () => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       const companyRes = await axiosInstance.get(`/${id}`);
       const companyData = companyRes.data.data.company;
@@ -44,7 +44,7 @@ const CompanyDetails = () => {
     } catch (err) {
       console.error("Error fetching data:", err);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -56,7 +56,7 @@ const CompanyDetails = () => {
   }, [searchTerm, students]);
 
   const handleRoundClick = async (studentname, roundIndex) => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       const student = students.find((s) => s.studentname === studentname);
       const roundName = `Round ${roundIndex + 1}`;
@@ -85,12 +85,12 @@ const CompanyDetails = () => {
     } catch (error) {
       console.error("Error updating round:", error);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
   const handleSelectionClick = async (studentname, currentRounds) => {
-    setIsLoading(true); // Start loading
+    setIsLoading(true);
     try {
       let updatedRounds = new Set(currentRounds);
 
@@ -117,7 +117,7 @@ const CompanyDetails = () => {
     } catch (error) {
       console.error("Error updating selection status:", error);
     } finally {
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     }
   };
 
@@ -160,7 +160,9 @@ const CompanyDetails = () => {
         </div>
       )}
       <div
-        className={`w-full ${isLoading ? "blur-sm pointer-events-none" : ""}`}
+        className={`w-full max-w-7xl mx-auto ${
+          isLoading ? "blur-sm pointer-events-none" : ""
+        }`}
       >
         <h1 className="text-3xl sm:text-2xl xs:text-xl font-bold mb-6 sm:mb-4 text-gray-900 text-center tracking-tight">
           {company?.companyname || "Loading..."}
@@ -179,14 +181,16 @@ const CompanyDetails = () => {
             Export to Excel
           </button>
         </div>
-        <input
-          type="text"
-          className="w-full max-w-lg p-2.5 sm:p-2 rounded-lg border border-gray-300 shadow-sm text-center text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all duration-200"
-          placeholder="Search students..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <div className="w-full max-w-7xl mt-6 sm:mt-4 bg-white p-6 sm:p-4 xs:p-3 rounded-xl shadow-lg border border-gray-200 overflow-x-auto">
+        <div className="flex justify-center">
+          <input
+            type="text"
+            className="w-full max-w-lg p-2.5 sm:p-2 rounded-lg border border-gray-300 shadow-sm text-center text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-all duration-200"
+            placeholder="Search students..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        <div className="mt-6 sm:mt-4 bg-white p-6 sm:p-4 xs:p-3 rounded-xl shadow-lg border border-gray-200 overflow-x-auto">
           <table className="w-full border-collapse text-sm sm:text-xs text-center">
             <thead className="bg-indigo-100 text-indigo-900 font-semibold border-b-2 border-indigo-200 hidden sm:table-header-group">
               <tr>
