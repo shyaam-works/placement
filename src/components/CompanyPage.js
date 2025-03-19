@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import API_URL from "../config";
+import { Link } from "react-router-dom";
+import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance instead of API_URL
 
 const CompanyPage = () => {
   const [companies, setCompanies] = useState([]);
@@ -12,21 +11,14 @@ const CompanyPage = () => {
   const [editingCompany, setEditingCompany] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true";
-    if (!isAuthenticated) {
-      navigate("/");
-      return;
-    }
     fetchCompanies();
-  }, [navigate]);
+  }, []);
 
   const fetchCompanies = async () => {
     try {
-      const res = await axios.get(API_URL);
+      const res = await axiosInstance.get("/"); // Use axiosInstance, no need for full URL
       setCompanies(res.data.data.allcompanies);
       setFilteredCompanies(res.data.data.allcompanies);
       setError("");
@@ -44,7 +36,7 @@ const CompanyPage = () => {
         setError("Total rounds must be a positive number.");
         return;
       }
-      await axios.post(API_URL, {
+      await axiosInstance.post("/", {
         companyname: companyName,
         totalRounds: roundsNum,
       });
@@ -65,7 +57,7 @@ const CompanyPage = () => {
     );
     if (confirmDelete) {
       try {
-        await axios.delete(`${API_URL}/${id}`);
+        await axiosInstance.delete(`/${id}`);
         setError("");
         fetchCompanies();
       } catch (err) {
@@ -94,7 +86,7 @@ const CompanyPage = () => {
         setError("Total rounds must be a positive number.");
         return;
       }
-      await axios.patch(`${API_URL}/${editingCompany._id}`, {
+      await axiosInstance.patch(`/${editingCompany._id}`, {
         companyname: companyName,
         totalRounds: roundsNum,
       });

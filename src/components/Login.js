@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import API_URL from "../config";
+import axiosInstance from "../lib/axiosInstance";
 import "./../index.css";
 
 const Login = () => {
@@ -15,15 +14,12 @@ const Login = () => {
     setError("");
 
     try {
-      const res = await axios.post(`${API_URL}/login`, {
+      const res = await axiosInstance.post(`/login`, {
         username,
         password,
       });
 
       if (res.data.status === "success") {
-        sessionStorage.setItem("isAuthenticated", "true");
-        setUsername("");
-        setPassword("");
         navigate("/home");
       } else {
         setError(res.data.message);

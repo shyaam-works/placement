@@ -1,29 +1,20 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom";
-import API_URL from "../config";
+import { useParams } from "react-router-dom";
+import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance instead of API_URL
 
 const RoundsPage = () => {
   const { id } = useParams();
   const [company, setCompany] = useState(null);
   const [roundGroups, setRoundGroups] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true";
-    if (!isAuthenticated) {
-      navigate("/");
-      return;
-    }
-
     fetchCompanyDetails();
-  }, [navigate]);
+  }, []);
 
   const fetchCompanyDetails = async () => {
     try {
-      const companyRes = await axios.get(`${API_URL}/${id}`);
+      const companyRes = await axiosInstance.get(`/${id}`); // Use axiosInstance
       const companyData = companyRes.data.data.company;
       setCompany(companyData);
 

@@ -7,19 +7,22 @@ import ManageStudents from "./components/ManageStudents";
 import StudentDetails from "./components/StudentDetails";
 import StudentAnalysis from "./components/StudentAnalysis"; // Import new page
 import Login from "./components/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/companies" element={<CompanyPage />} />
-        <Route path="/company/:id" element={<CompanyDetails />} />
-        <Route path="/company/:id/rounds" element={<RoundsPage />} />
-        <Route path="/students" element={<ManageStudents />} />
-        <Route path="/student/:id" element={<StudentDetails />} />
-        <Route path="/students/analysis" element={<StudentAnalysis />} />{" "}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/companies" element={<CompanyPage />} />
+          <Route path="/company/:id" element={<CompanyDetails />} />
+          <Route path="/company/:id/rounds" element={<RoundsPage />} />
+          <Route path="/students" element={<ManageStudents />} />
+          <Route path="/student/:id" element={<StudentDetails />} />
+          <Route path="/students/analysis" element={<StudentAnalysis />} />{" "}
+        </Route>
         {/* New Route */}
       </Routes>
     </Router>

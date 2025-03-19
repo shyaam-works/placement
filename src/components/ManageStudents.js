@@ -1,29 +1,21 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link } from "react-router-dom";
+import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance instead of API_URL
 import * as XLSX from "xlsx";
-import API_URL from "../config";
 
 const ManageStudents = () => {
   const [students, setStudents] = useState([]);
   const [filteredStudents, setFilteredStudents] = useState([]);
   const [companyNames, setCompanyNames] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true";
-    if (!isAuthenticated) {
-      navigate("/");
-      return;
-    }
     fetchStudents();
-  }, [navigate]);
+  }, []);
 
   const fetchStudents = async () => {
     try {
-      const res = await axios.get(`${API_URL}/users`);
+      const res = await axiosInstance.get("/users"); // Use axiosInstance
       const usersData = res.data.data.allusers;
 
       const uniqueCompanies = new Set();

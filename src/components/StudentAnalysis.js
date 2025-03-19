@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance instead of API_URL
 import {
   BarChart,
   Bar,
@@ -15,8 +15,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
-import { Link, useNavigate } from "react-router-dom";
-import API_URL from "../config";
+import { Link } from "react-router-dom";
 
 const StudentAnalysis = () => {
   const [companyStats, setCompanyStats] = useState([]);
@@ -32,21 +31,14 @@ const StudentAnalysis = () => {
     quad: 0,
   });
   const [rejectionStats, setRejectionStats] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true";
-    if (!isAuthenticated) {
-      navigate("/");
-      return;
-    }
     fetchAnalysisData();
-  }, [navigate]);
+  }, []);
 
   const fetchAnalysisData = async () => {
     try {
-      const res = await axios.get(`${API_URL}/users`);
+      const res = await axiosInstance.get("/users"); // Use axiosInstance
       const usersData = res.data.data.allusers;
 
       setTotalStudents(usersData.length);

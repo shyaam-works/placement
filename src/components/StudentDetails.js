@@ -1,26 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import API_URL from "../config";
+import { useParams } from "react-router-dom";
+import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance instead of API_URL
 
 const StudentDetails = () => {
   const { id } = useParams();
   const [student, setStudent] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const isAuthenticated =
-      sessionStorage.getItem("isAuthenticated") === "true";
-    if (!isAuthenticated) {
-      navigate("/");
-      return;
-    }
     fetchStudentDetails();
-  }, [navigate]);
+  }, []);
 
   const fetchStudentDetails = async () => {
     try {
-      const res = await axios.get(`${API_URL}/users/${id}`);
+      const res = await axiosInstance.get(`/users/${id}`); // Use axiosInstance
       setStudent(res.data.data.user);
     } catch (error) {
       console.error("Error fetching student details:", error);
