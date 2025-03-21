@@ -89,7 +89,7 @@ const StudentDetails = () => {
         {/* Companies Attended */}
         <div className="bg-white/90 backdrop-blur-lg rounded-xl p-6 shadow-lg">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 text-center">
-            Companies Attended
+            Companies Cleared
           </h2>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {student.companies.map((company, index) => (
