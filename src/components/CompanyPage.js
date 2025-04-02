@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axiosInstance from "../lib/axiosInstance"; // Import axiosInstance instead of API_URL
+import axiosInstance from "../lib/axiosInstance";
 
 const CompanyPage = () => {
   const [companies, setCompanies] = useState([]);
   const [filteredCompanies, setFilteredCompanies] = useState([]);
   const [companyName, setCompanyName] = useState("");
   const [totalRounds, setTotalRounds] = useState("");
+  const [minXth, setMinXth] = useState(""); // Added for Xth criteria
+  const [minXIIth, setMinXIIth] = useState(""); // Added for XIIth criteria
+  const [minAggregateUG, setMinAggregateUG] = useState(""); // Added for UG criteria
   const [showRoundsInput, setShowRoundsInput] = useState(false);
   const [editingCompany, setEditingCompany] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +21,7 @@ const CompanyPage = () => {
 
   const fetchCompanies = async () => {
     try {
-      const res = await axiosInstance.get("/"); // Use axiosInstance, no need for full URL
+      const res = await axiosInstance.get("/");
       setCompanies(res.data.data.allcompanies);
       setFilteredCompanies(res.data.data.allcompanies);
       setError("");
@@ -32,16 +35,35 @@ const CompanyPage = () => {
     if (!companyName.trim() || !totalRounds.trim()) return;
     try {
       const roundsNum = parseInt(totalRounds, 10);
+      const xth = parseFloat(minXth) || 0;
+      const xii = parseFloat(minXIIth) || 0;
+      const ug = parseFloat(minAggregateUG) || 0;
+
       if (isNaN(roundsNum) || roundsNum <= 0) {
         setError("Total rounds must be a positive number.");
         return;
       }
+      if (xth < 0 || xth > 100 || xii < 0 || xii > 100) {
+        setError("Xth and XIIth percentages must be between 0 and 100.");
+        return;
+      }
+      if (ug < 0 || ug > 10) {
+        setError("UG Aggregate must be between 0 and 10.");
+        return;
+      }
+
       await axiosInstance.post("/", {
         companyname: companyName,
         totalRounds: roundsNum,
+        minXth: xth,
+        minXIIth: xii,
+        minAggregateUG: ug,
       });
       setCompanyName("");
       setTotalRounds("");
+      setMinXth("");
+      setMinXIIth("");
+      setMinAggregateUG("");
       setShowRoundsInput(false);
       setError("");
       fetchCompanies();
@@ -71,6 +93,11 @@ const CompanyPage = () => {
     setEditingCompany(company);
     setCompanyName(company.companyname);
     setTotalRounds(company.totalRounds.toString());
+    setMinXth(company.minXth ? company.minXth.toString() : ""); // Load existing criteria
+    setMinXIIth(company.minXIIth ? company.minXIIth.toString() : "");
+    setMinAggregateUG(
+      company.minAggregateUG ? company.minAggregateUG.toString() : ""
+    );
     setShowRoundsInput(true);
     setError("");
   };
@@ -82,17 +109,36 @@ const CompanyPage = () => {
     }
     try {
       const roundsNum = parseInt(totalRounds, 10);
+      const xth = parseFloat(minXth) || 0;
+      const xii = parseFloat(minXIIth) || 0;
+      const ug = parseFloat(minAggregateUG) || 0;
+
       if (isNaN(roundsNum) || roundsNum <= 0) {
         setError("Total rounds must be a positive number.");
         return;
       }
+      if (xth < 0 || xth > 100 || xii < 0 || xii > 100) {
+        setError("Xth and XIIth percentages must be between 0 and 100.");
+        return;
+      }
+      if (ug < 0 || ug > 10) {
+        setError("UG Aggregate must be between 0 and 10.");
+        return;
+      }
+
       await axiosInstance.patch(`/${editingCompany._id}`, {
         companyname: companyName,
         totalRounds: roundsNum,
+        minXth: xth,
+        minXIIth: xii,
+        minAggregateUG: ug,
       });
       setEditingCompany(null);
       setCompanyName("");
       setTotalRounds("");
+      setMinXth("");
+      setMinXIIth("");
+      setMinAggregateUG("");
       setShowRoundsInput(false);
       setError("");
       fetchCompanies();
@@ -145,14 +191,44 @@ const CompanyPage = () => {
           />
 
           {showRoundsInput && (
-            <input
-              type="number"
-              min="1"
-              placeholder="Enter total rounds"
-              value={totalRounds}
-              onChange={(e) => setTotalRounds(e.target.value)}
-              className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
-            />
+            <>
+              <input
+                type="number"
+                min="1"
+                placeholder="Enter total rounds"
+                value={totalRounds}
+                onChange={(e) => setTotalRounds(e.target.value)}
+                className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
+              />
+              <input
+                type="number"
+                min="0"
+                max="100"
+                placeholder="Min Xth %"
+                value={minXth}
+                onChange={(e) => setMinXth(e.target.value)}
+                className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
+              />
+              <input
+                type="number"
+                min="0"
+                max="100"
+                placeholder="Min XIIth %"
+                value={minXIIth}
+                onChange={(e) => setMinXIIth(e.target.value)}
+                className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
+              />
+              <input
+                type="number"
+                min="0"
+                max="10"
+                step="0.1"
+                placeholder="Min UG Aggregate"
+                value={minAggregateUG}
+                onChange={(e) => setMinAggregateUG(e.target.value)}
+                className="flex-1 p-2.5 sm:p-2 rounded-lg border-none text-center bg-white/50 text-black focus:border-2 focus:border-blue-200 focus:ring-4 focus:ring-blue-300 focus:outline-none placeholder-black/50"
+              />
+            </>
           )}
         </div>
 

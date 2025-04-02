@@ -20,29 +20,33 @@ const CompanyDetails = () => {
   const fetchCompanyDetails = async () => {
     setIsLoading(true);
     try {
-      const companyRes = await axiosInstance.get(`/${id}`);
-      const companyData = companyRes.data.data.company;
-      setCompany(companyData);
-      setRoundsCount(companyData.totalRounds || 0);
+      // Fetch company to get its stored criteria
+      const initialRes = await axiosInstance.get(`/${id}`);
+      const companyData = initialRes.data.data.company;
 
-      const usersRes = await axiosInstance.get("/users");
-      const usersData = usersRes.data.data.allusers;
+      // Use the company's stored criteria as query parameters
+      const queryParams = new URLSearchParams({
+        minXth: companyData.minXth || 0,
+        minXIIth: companyData.minXIIth || 0,
+        minAggregateUG: companyData.minAggregateUG || 0,
+      }).toString();
 
-      const formattedUsers = usersData.map((user) => {
-        const companyEntry = user.companies.find(
-          (c) => c.companyname === companyData.companyname
-        );
-        const userRounds = new Set(companyEntry ? companyEntry.rounds : []);
-        return {
-          studentname: user.username,
-          rounds: Array.from(userRounds),
-        };
-      });
+      // Fetch again with criteria (could optimize to one call if backend adjusts)
+      const companyRes = await axiosInstance.get(`/${id}?${queryParams}`);
+      const filteredCompanyData = companyRes.data.data.company;
 
-      setStudents(formattedUsers);
-      setFilteredStudents(formattedUsers);
+      setCompany(filteredCompanyData);
+      setRoundsCount(filteredCompanyData.totalRounds || 0);
+
+      const formattedStudents = filteredCompanyData.students.map((student) => ({
+        studentname: student.studentname,
+        rounds: student.rounds || [],
+      }));
+
+      setStudents(formattedStudents);
+      setFilteredStudents(formattedStudents);
     } catch (err) {
-      console.error("Error fetching data:", err);
+      console.error("Error fetching company details:", err);
     } finally {
       setIsLoading(false);
     }
@@ -52,6 +56,7 @@ const CompanyDetails = () => {
     const filtered = students.filter((student) =>
       student.studentname.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    console.log(filtered);
     setFilteredStudents(filtered);
   }, [searchTerm, students]);
 
@@ -153,7 +158,6 @@ const CompanyDetails = () => {
 
   return (
     <div className="font-poppins bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen flex flex-col items-center p-6 sm:p-4 xs:p-3 text-gray-800 box-border relative">
-      {/* Loading Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
           <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
