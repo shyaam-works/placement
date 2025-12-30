@@ -1,70 +1,136 @@
-# Getting Started with Create React App
+# Placement Management & Analytics Portal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full‑stack, production‑oriented placement management system designed to handle **real college placement workflows** with **data‑driven decision support**. The platform centralizes student data, company eligibility criteria, round‑wise progress tracking, analytics, and AI‑assisted shortlisting — all in one place.
 
-## Available Scripts
+> Built with scalability, fairness, and interview‑readiness in mind.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This application is built to solve a real problem faced by placement cells:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* Managing **hundreds of students and companies**
+* Tracking **round‑wise progress** across multiple companies
+* Ensuring **eligibility filtering** based on company criteria
+* Providing **transparent, unbiased student shortlisting** when companies request top candidates
 
-### `npm test`
+The system combines **traditional CRUD workflows**, **machine‑learning–based recommendations**, and **analytics dashboards** to support placement officers in making informed decisions.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Key Features
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Company Management with Eligibility Filtering
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Add companies along with **eligibility criteria** (CGPA, specialization, etc.)
+* Dedicated company pages display **only eligible students**
+* If no criteria are applied, **all students are shown** by default
+* Real‑time filtering powered by backend validation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### Student Management & Profiles
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Centralized student list with:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  * Companies applied
+  * Rounds cleared per company
+* Dedicated **student profile page** showcasing:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  * 10th & 12th percentages / CGPA
+  * Undergraduate details
+  * LeetCode profile link
+  *LeetCode statistics fetched via an external API, providing real‑time coding performance insights
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### Round‑Wise Tracking & Database Updates
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* Interactive table to track student progress
+* One‑click actions to:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  * Mark a student as having **cleared a specific round**
+  * Mark a student as **selected** for a company
+* Each action updates the database instantly, maintaining consistency across dashboards
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Analytics & Insights Dashboard
 
-### Analyzing the Bundle Size
+* Dedicated analytics page showing:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+  * Company‑wise student participation
+  * Round‑wise drop‑off statistics
+  * Number of students cleared per round per company
+* Designed to provide **quick, high‑level insights** for placement officers
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### AI‑Assisted Student Shortlisting
 
-### Advanced Configuration
+When companies request a limited number of candidates (e.g., *Top 10 students*), the system provides **unbiased recommendations** using a hybrid approach:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+#### Phase 1 — Weighted Scoring (Cold Start)
 
-### Deployment
+* Used when **no company data is available**
+* Students are ranked using a **weighted average** of:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+  * Academics
+  * Coding performance
+  * Other normalized signals
 
-### `npm run build` fails to minify
+#### Phase 2 — K‑Nearest Neighbors (KNN)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Activated once sufficient placement data is available
+* Uses historical outcomes to identify students **similar to previously successful candidates**
+* Helps reduce manual bias and supports **data‑driven shortlisting**
+
+> The ML logic is implemented in **Python** and prototyped via **Jupyter Notebook**, then integrated into the system workflow.
+
+---
+
+### Authentication & Security
+
+* **JWT‑based authentication**
+* Passwords securely hashed using **bcrypt**
+* Authentication stored in **HTTP‑only, secure cookies**
+* Designed with best practices to prevent common security flaws
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* **React** — Component‑based UI
+* **Tailwind CSS** — Utility‑first styling
+* **Framer Motion** — Professional page‑level animations
+
+### Backend
+
+* **Node.js** & **Express** — REST API
+* **MongoDB** — Scalable NoSQL database
+
+### Machine Learning
+
+* **Python** — KNN & weighted scoring logic
+* **Jupyter Notebook** — Model experimentation & validation
+
+### Security
+
+* **JWT Authentication**
+* **bcrypt** — Password hashing
+* **Secure HTTP‑only cookies**
+
+---
+
+## 🎥 Demo
+
+📺 **Video Walkthrough**: *(Coming Soon)*
+
+> A complete walkthrough covering company setup, eligibility filtering, analytics, and AI‑assisted shortlisting.
+
+---
+
+> *Designed to reflect how modern placement systems should be built — structured, secure, and data‑driven.*
