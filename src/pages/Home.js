@@ -10,15 +10,37 @@ const Home = () => {
   const navigate = useNavigate();
   const [count, setCount] = useState(20);
   const [topStudents, setTopStudents] = useState([]);
-  const [loading, setLoading] = useState(false); // For fetching top students
-  const [pageLoading, setPageLoading] = useState(true); // For initial page load
+  const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // NEW: rotating analysis messages
+  const loadingMessages = [
+    "Analysing data...",
+    "Calculating...",
+    "Evaluating performance...",
+    "Ranking students...",
+    "Finalizing results...",
+  ];
+  const [loadingText, setLoadingText] = useState(loadingMessages[0]);
+
   useEffect(() => {
-    // Simulate minimal load for page, remove if unnecessary
     const timer = setTimeout(() => setPageLoading(false), 300);
     return () => clearTimeout(timer);
   }, []);
+
+  // NEW: change text every 10 seconds while loading
+  useEffect(() => {
+    if (!loading) return;
+
+    let index = 0;
+    const interval = setInterval(() => {
+      index = (index + 1) % loadingMessages.length;
+      setLoadingText(loadingMessages[index]);
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   const fetchTopStudents = async () => {
     const num = parseInt(count, 10);
@@ -28,6 +50,7 @@ const Home = () => {
     }
 
     setLoading(true);
+    setLoadingText(loadingMessages[0]);
     setError("");
     setTopStudents([]);
 
@@ -113,7 +136,6 @@ const Home = () => {
             </p>
           </div>
 
-          {/* Input + Button */}
           <div className="flex flex-col sm:flex-row gap-4">
             <input
               type="number"
@@ -129,13 +151,11 @@ const Home = () => {
               disabled={loading}
               className="flex-1 px-6 py-3 bg-white text-indigo-700 font-bold rounded-xl shadow-lg hover:bg-indigo-50 transition disabled:opacity-70"
             >
-              {loading ? "Analysing..." : "Get Top Students"}
+              {loading ? loadingText : "Get Top Students"}
             </button>
           </div>
 
-          {/* Dynamic Content Area */}
           <div className="flex-1 flex flex-col min-h-0">
-            {/* Placeholder */}
             {topStudents.length === 0 && !loading && !error && (
               <div className="flex-1 flex items-end">
                 <div className="w-full bg-white/10 p-6 rounded-2xl border border-white/20 text-indigo-50">
@@ -151,7 +171,6 @@ const Home = () => {
               </div>
             )}
 
-            {/* Results */}
             {topStudents.length > 0 && (
               <div className="flex-1 bg-white/95 text-gray-800 rounded-2xl p-6 overflow-y-auto relative">
                 <h3 className="text-xl font-bold mb-4 text-center">
@@ -185,7 +204,6 @@ const Home = () => {
               </div>
             )}
 
-            {/* Error */}
             {error && (
               <div className="flex-1 flex items-center justify-center">
                 <p className="text-red-200 font-medium text-center">{error}</p>
