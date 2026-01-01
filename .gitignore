@@ -1,4 +1,6 @@
 # .gitignore
+.env.development
+.env.production 
 node_modules/
 build/
 *.log
