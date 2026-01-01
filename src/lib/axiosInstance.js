@@ -1,7 +1,7 @@
 import axios from "axios";
 const axiosInstance = axios.create({
-  baseURL: "https://placementb.onrender.com",
+  baseURL: process.env.REACT_APP_API_URL,
   withCredentials: true,
 });
-
+console.log(process.env.REACT_APP_API_URL);
 export default axiosInstance;

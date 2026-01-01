@@ -1,28 +1,52 @@
+// src/pages/StudentDetails.jsx
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../lib/axiosInstance";
+import BarLoader from "../components/BarLoader"; // Make sure the path is correct
 
 const StudentDetails = () => {
   const { id } = useParams();
   const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(true); // Start with true
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchStudentDetails();
+    // eslint-disable-next-line
   }, []);
 
   const fetchStudentDetails = async () => {
     try {
+      setLoading(true);
       const res = await axiosInstance.get(`/users/${id}`);
       setStudent(res.data.data.user);
     } catch (error) {
       console.error("Error fetching student details:", error);
+      setError("Failed to fetch student data.");
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading)
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-100 to-blue-200">
+        <BarLoader />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-600 font-semibold text-xl">
+        {error}
+      </div>
+    );
 
   if (!student)
     return (
       <div className="text-xl font-semibold text-gray-700 text-center mt-16">
-        Loading...
+        No student data available.
       </div>
     );
 

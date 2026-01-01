@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
     const verifyAuth = async () => {
       try {
         // Use axiosInstance to make a request to a protected endpoint
-        await axiosInstance.get("/");
+        await axiosInstance.get("/comp");
         setAuthStatus(true);
       } catch (err) {
         console.error("Auth verification failed:", err.response);

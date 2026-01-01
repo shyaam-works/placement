@@ -1,31 +1,121 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./components/Home";
-import CompanyPage from "./components/CompanyPage";
-import CompanyDetails from "./components/CompanyDetails";
-import RoundsPage from "./components/RoundsPage";
-import ManageStudents from "./components/ManageStudents";
-import StudentDetails from "./components/StudentDetails";
-import StudentAnalysis from "./components/StudentAnalysis"; // Import new page
-import Login from "./components/Login";
-import ProtectedRoute from "./components/ProtectedRoute";
+// App.js
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+// Pages
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import CompanyPage from "./pages/CompanyPage";
+import CompanyDetails from "./pages/CompanyDetails";
+import RoundsPage from "./pages/RoundsPage";
+import ManageStudents from "./pages/ManageStudents";
+import StudentDetails from "./pages/StudentDetails";
+import StudentAnalysis from "./pages/StudentAnalysis";
+import Landingpage from "./pages/Landingpage";
+
+// pages
+import ProtectedRoute from "./pages/ProtectedRoute";
+import Navbar from "./pages/Navbar"; // ← Our new reusable Navbar
+
+// Layout for protected pages (includes Navbar)
+const ProtectedLayout = ({ children }) => {
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <Navbar />
+      <main className="flex-1 pt-16">
+        {" "}
+        {/* pt-16 gives space below fixed navbar */}
+        {children}
+      </main>
+    </div>
+  );
+};
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/companies" element={<CompanyPage />} />
-          <Route path="/company/:id" element={<CompanyDetails />} />
-          <Route path="/company/:id/rounds" element={<RoundsPage />} />
-          <Route path="/students" element={<ManageStudents />} />
-          <Route path="/student/:id" element={<StudentDetails />} />
-          <Route path="/students/analysis" element={<StudentAnalysis />} />{" "}
-        </Route>
-        {/* New Route */}
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          {/* Public route */}
+          <Route path="/" element={<Landingpage />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* All protected routes — wrapped with ProtectedRoute AND get Navbar */}
+          <Route element={<ProtectedRoute />}>
+            <Route
+              path="/home"
+              element={
+                <ProtectedLayout>
+                  <Home />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/companies"
+              element={
+                <ProtectedLayout>
+                  <CompanyPage />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/company/:id"
+              element={
+                <ProtectedLayout>
+                  <CompanyDetails />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/company/:id/rounds"
+              element={
+                <ProtectedLayout>
+                  <RoundsPage />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/students"
+              element={
+                <ProtectedLayout>
+                  <ManageStudents />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/student/:id"
+              element={
+                <ProtectedLayout>
+                  <StudentDetails />
+                </ProtectedLayout>
+              }
+            />
+            <Route
+              path="/students/analysis"
+              element={
+                <ProtectedLayout>
+                  <StudentAnalysis />
+                </ProtectedLayout>
+              }
+            />
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+    </>
   );
 }
 
