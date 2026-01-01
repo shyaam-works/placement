@@ -39,7 +39,6 @@ const CompanyDetails = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     const filtered = students.filter((student) =>
       student.studentname.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -141,24 +140,24 @@ const CompanyDetails = () => {
           isLoading ? "blur-sm pointer-events-none" : ""
         }`}
       >
-        {/* Header */}
-        <div className="flex flex-col items-center gap-3 mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 text-center">
+        {/* Header, Buttons, Search */}
+        <div className="flex flex-col items-center gap-3 sm:gap-2 mb-6">
+          <h1 className="text-3xl sm:text-2xl xs:text-xl font-bold text-gray-900 text-center">
             {company?.companyname || "Loading..."}
           </h1>
-          <p className="font-semibold text-gray-700">
+          <p className="text-base sm:text-sm xs:text-xs font-semibold text-gray-700 text-center">
             Students Eligible: {filteredStudents.length}
           </p>
 
           <div className="flex gap-3 flex-wrap justify-center">
             <Link
               to={`/company/${id}/rounds`}
-              className="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-semibold rounded-lg"
+              className="px-3 py-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-sm font-semibold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition"
             >
               View Rounds Summary
             </Link>
             <button
-              className="px-3 py-1.5 bg-white text-gray-900 text-sm font-semibold rounded-lg"
+              className="px-3 py-1.5 bg-white text-gray-900 text-sm font-semibold rounded-lg hover:bg-gray-100 transition"
               onClick={exportToExcel}
             >
               Export to Excel
@@ -170,52 +169,61 @@ const CompanyDetails = () => {
             placeholder="Search students..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full max-w-lg p-2 rounded-lg border text-center mt-3"
+            className="w-full max-w-lg p-2 rounded-lg border border-gray-300 shadow-sm text-center text-gray-700 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition mt-3"
           />
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto bg-white/50 rounded-xl shadow-lg border">
+        <div className="overflow-x-auto bg-white/50 rounded-xl shadow-lg border border-gray-200">
           <table className="w-full border-collapse text-sm text-center">
-            <thead className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white hidden sm:table-header-group">
+            <thead className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold hidden sm:table-header-group">
               <tr>
-                <th className="p-3">Student Name</th>
+                <th className="p-3 border border-white/30">Student Name</th>
                 {[...Array(roundsCount)].map((_, i) => (
-                  <th key={i} className="p-3">
+                  <th key={i} className="p-3 border border-white/30">
                     Round {i + 1}
                   </th>
                 ))}
-                <th className="p-3">Selected</th>
+                <th className="p-3 border border-white/30">Selected</th>
               </tr>
             </thead>
             <tbody>
               {filteredStudents.map((student, idx) => (
-                <tr key={idx} className="flex flex-col sm:table-row mb-4">
-                  <td className="p-3 font-medium">{student.studentname}</td>
+                <tr
+                  key={idx}
+                  className={`flex flex-col sm:table-row mb-4 sm:mb-0 border-b sm:border-b-0 border-gray-200 hover:bg-gray-50 transition`}
+                >
+                  <td className="p-3 border border-gray-200 text-gray-900 font-medium sm:table-cell">
+                    {student.studentname}
+                  </td>
 
                   {[...Array(roundsCount)].map((_, roundIndex) => (
-                    <td key={roundIndex} className="p-2">
+                    <td
+                      key={roundIndex}
+                      className="p-2 border border-gray-200 sm:table-cell"
+                    >
                       <button
-                        className={`w-full px-2 py-1 rounded-md text-white text-xs font-medium ${
+                        className={`w-full px-2 py-1 rounded-md text-white text-xs font-medium shadow-sm transition duration-200 hover:scale-105 hover:shadow-md ${
                           student.rounds.includes(`Round ${roundIndex + 1}`)
-                            ? "bg-indigo-500"
-                            : "bg-gray-400"
+                            ? "bg-indigo-500 hover:bg-indigo-600"
+                            : "bg-gray-400 hover:bg-gray-500"
                         }`}
                         onClick={() =>
                           handleRoundClick(student.studentname, roundIndex)
                         }
                       >
-                        R{roundIndex + 1}
+                        {/* Always show R1, R2 etc for mobile & desktop */}R
+                        {roundIndex + 1}
                       </button>
                     </td>
                   ))}
 
-                  <td className="p-2">
+                  <td className="p-2 border border-gray-200 sm:table-cell">
                     <button
-                      className={`w-full px-2 py-1 rounded-md text-white text-xs font-medium ${
+                      className={`w-full px-2 py-1 rounded-md text-white text-xs font-medium shadow-sm transition duration-200 hover:scale-105 hover:shadow-md ${
                         student.rounds.includes("Selected")
-                          ? "bg-purple-500"
-                          : "bg-gray-400"
+                          ? "bg-purple-500 hover:bg-purple-600"
+                          : "bg-gray-400 hover:bg-gray-500"
                       }`}
                       onClick={() =>
                         handleSelectionClick(
@@ -224,9 +232,7 @@ const CompanyDetails = () => {
                         )
                       }
                     >
-                      {student.rounds.includes("Selected")
-                        ? "Selected"
-                        : "Not Selected"}
+                      {student.rounds.includes("Selected") ? "✓" : "✗"}
                     </button>
                   </td>
                 </tr>
